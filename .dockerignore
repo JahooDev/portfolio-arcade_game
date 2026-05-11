@@ -1,0 +1,9 @@
+node_modules
+dist
+dist-node
+.git
+.lovable
+.vscode
+.idea
+*.log
+.DS_Store

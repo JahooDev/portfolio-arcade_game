@@ -1,0 +1,47 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# dependencies
+node_modules
+
+# build outputs
+dist
+dist-ssr
+dist-node
+.output
+.vinxi
+.nitro
+
+# TanStack / framework cache
+.tanstack/**
+
+# env
+.env
+.env.*
+!.env.example
+
+# Cloudflare (unused in VPS deploy but safe)
+.wrangler/
+.dev.vars
+
+# IDE
+.vscode/
+!.vscode/extensions.json
+.idea
+
+# OS
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+
+# optional tools
+.lovable/
