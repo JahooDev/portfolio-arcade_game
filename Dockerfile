@@ -1,14 +1,7 @@
-# Multi-stage Dockerfile for self-hosted Node.js SSR deployment.
-#
-# Build:  docker build -t my-arcade .
-# Run:    docker run --rm -p 3000:3000 my-arcade
-#
-# This image targets the Node build (vite.config.node.ts), NOT the
-# Cloudflare Workers build used by the Lovable preview.
-
 # ---- deps ----
 FROM node:20-alpine AS deps
 WORKDIR /app
+
 COPY package.json package-lock.json* ./
 RUN npm ci
 
@@ -16,10 +9,9 @@ RUN npm ci
 FROM node:20-alpine AS build
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
-RUN npm ci
-
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+
 RUN npm run build:node
 
 # ---- runtime ----
