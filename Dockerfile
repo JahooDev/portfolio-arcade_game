@@ -22,9 +22,10 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOST=0.0.0.0
 
+COPY --from=build /app/dist-node ./dist-node
+COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./package.json
-COPY --from=build /app/package-lock.json ./package-lock.json
-RUN npm ci --omit=dev
 
 EXPOSE 3000
-CMD ["node", "dist-node/server/server.js"]
+
+CMD ["node", "dist-node/server/server.node.js"]
