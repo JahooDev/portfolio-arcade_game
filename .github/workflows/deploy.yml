@@ -25,7 +25,7 @@ jobs:
 
       - name: Build image
         run: |
-          docker build -t ghcr.io/jahoodev/arcade-portfolio:latest .
+          docker build --no-cache -t ghcr.io/jahoodev/arcade-portfolio:latest .
 
       - name: Push image
         run: |
