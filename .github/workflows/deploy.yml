@@ -20,20 +20,24 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build image
         run: |
-          docker build --no-cache -t ghcr.io/jahoodev/arcade-portfolio:latest .
+          docker build \
+            -t ghcr.io/jahoodev/arcade-portfolio:${{ github.sha }} \
+            -t ghcr.io/jahoodev/arcade-portfolio:latest .
 
       - name: Push image
         run: |
+          docker push ghcr.io/jahoodev/arcade-portfolio:${{ github.sha }}
           docker push ghcr.io/jahoodev/arcade-portfolio:latest
 
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
+    timeout-minutes: 2
 
     steps:
       - name: Deploy on VPS via SSH
@@ -45,4 +49,9 @@ jobs:
           script: |
             cd /app/arcade-portfolio
             docker compose pull
+            docker compose down
             docker compose up -d
+
+            # basic health check (fail deploy if app is dead)
+            sleep 3
+            curl -f http://localhost:3000 || exit 1
