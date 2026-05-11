@@ -19,7 +19,7 @@ export default defineConfig({
     tailwindcss(),
     tanstackStart({
       // Use our Node http bootstrap instead of the default Worker-style entry.
-      server: { entry: "server.node" },
+      server: { entry: "./src/server.node.ts" },
     }),
     viteReact(),
   ],
@@ -28,6 +28,9 @@ export default defineConfig({
     emptyOutDir: true,
   },
   resolve: {
+    alias: {
+      "h3-v2": "h3",
+    },
     dedupe: ["react", "react-dom", "@tanstack/react-router"],
   },
 });
